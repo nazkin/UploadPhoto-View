@@ -3,6 +3,8 @@ const multer = require('multer');
 const exphbs = require('express-handlebars');
 const path = require('path');
 const port = process.env.PORT || 3000;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 // Set The Storage Engine
 const storage = multer.diskStorage({
@@ -50,6 +52,14 @@ app.set("view engine", "handlebars");
 
 // Public Folder
 app.use(express.static('./public'));
+//mongoose set up 
+mongoose.connect("mongodb://localhost:27017/photos", {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.set('useFindAndModify', false);
+
+var PhotoSchema = new Schema({ 
+    filename: String  
+});
+var Photo = mongoose.model('Photos',PhotoSchema);
 
 app.get('/', (req, res) => res.render('index'));
 
@@ -65,6 +75,11 @@ app.post('/upload', (req, res) => {
           msg: 'Error: No File Selected!'
         });
       } else {
+        const newPhoto = new Photo({
+            filename: req.file.filename
+        });
+        newPhoto.save();
+
         res.render('index', {
           msg: 'File Uploaded!',
           file: `uploads/${req.file.filename}`
