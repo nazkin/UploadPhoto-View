@@ -62,6 +62,12 @@ var PhotoSchema = new Schema({
 var Photo = mongoose.model('Photos',PhotoSchema);
 
 app.get('/', (req, res) => res.render('index'));
+app.get('/photo', (req,res)=> {
+    Photo.findOne({}).then(result=> {
+        const name = result;
+        res.render('photo', name)
+    });
+})
 
 app.post('/upload', (req, res) => {
   upload(req, res, (err) => {
