@@ -1,0 +1,14 @@
+<div class="jumbotron">
+    <h1>Upload your image below</h1>
+</div>
+<form action="/upload" method="POST" enctype="multipart/form-data" >
+  <div class="form-group">
+    <label >Upload here</label>
+    <input name="myImage" type="file" class="form-control-file" id="upload-image">
+  </div>
+  <button type="submit" class="p-inline btn btn-secondary">Upload Image</button>
+</formaction="/upload" method="POST" enctype="multipart/form-data">
+
+<div class="container">
+    <img src="{{file}}" alt="uploaded image" width="100px" height="75px">
+</div>
